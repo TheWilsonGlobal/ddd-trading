@@ -26,7 +26,6 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'terminal', label: t.header.tabs.terminal },
     { id: 'depth', label: t.header.tabs.depth },
     { id: 'ledger', label: t.header.tabs.ledger },
-    { id: 'kafka', label: t.header.tabs.kafka },
     { id: 'architecture', label: t.header.tabs.architecture },
     { id: 'benchmark', label: t.header.tabs.benchmark },
   ];

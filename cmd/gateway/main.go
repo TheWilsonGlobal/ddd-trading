@@ -59,6 +59,7 @@ func envPositiveInt(getenv func(string) string, name string, def int) (int, erro
 }
 
 func main() {
+	config.LoadDotEnv()
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
 	slog.SetDefault(logger)
 

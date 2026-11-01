@@ -8,28 +8,28 @@ export const ROLE_PERMISSIONS: Record<AdminRole, {
   canModifyRiskConfig: boolean;
 }> = {
   SUPER_ADMIN: {
-    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'settlement', 'accounts', 'infra', 'config'],
+    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'events', 'settlement', 'accounts', 'infra', 'config'],
     canHaltTrading: true,
     canCancelOrders: true,
     canAdjustBalances: true,
     canModifyRiskConfig: true,
   },
   RISK_OFFICER: {
-    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'settlement', 'accounts', 'config'],
+    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'events', 'settlement', 'accounts', 'config'],
     canHaltTrading: true,
     canCancelOrders: true,
     canAdjustBalances: false,
     canModifyRiskConfig: true,
   },
   OPERATOR: {
-    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'settlement', 'accounts', 'infra'],
+    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'events', 'settlement', 'accounts', 'infra'],
     canHaltTrading: false,
     canCancelOrders: true,
     canAdjustBalances: false,
     canModifyRiskConfig: false,
   },
   VIEWER: {
-    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'settlement'],
+    allowedTabs: ['dashboard', 'orderbooks', 'orders', 'events', 'settlement'],
     canHaltTrading: false,
     canCancelOrders: false,
     canAdjustBalances: false,

@@ -17,7 +17,7 @@ export const Header: React.FC<HeaderProps> = ({ isLiveConnected }) => {
   }, []);
 
   return (
-    <header className="h-16 border-b border-slate-800 bg-slate-900/95 backdrop-blur px-6 flex items-center justify-between sticky top-0 z-40">
+    <header className="h-16 shrink-0 border-b border-slate-800 bg-slate-900/95 backdrop-blur px-6 flex items-center justify-between sticky top-0 z-40">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center font-black text-black shadow-lg shadow-cyan-500/20">

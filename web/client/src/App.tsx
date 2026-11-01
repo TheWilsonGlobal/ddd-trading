@@ -6,7 +6,6 @@ import { OrderBookDepth } from './components/OrderBookDepth';
 import { OrderPlacementDesk } from './components/OrderPlacementDesk';
 import { TradeTape } from './components/TradeTape';
 import { AccountRiskLedger } from './components/AccountRiskLedger';
-import { EventStreamViewer } from './components/EventStreamViewer';
 import { ArchitectureViewer } from './components/ArchitectureViewer';
 import { StressTestRunner } from './components/StressTestRunner';
 import { InvariantTestSuite } from './components/InvariantTestSuite';
@@ -293,10 +292,6 @@ function TradingApp() {
             onCancelOrder={handleCancelOrder}
             ledgerTransactions={engineState.ledger}
           />
-        )}
-
-        {activeTab === 'kafka' && (
-          <EventStreamViewer events={engineState.events} />
         )}
 
         {activeTab === 'architecture' && (

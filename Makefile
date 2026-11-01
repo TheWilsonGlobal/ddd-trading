@@ -12,8 +12,8 @@ COMPOSE = docker compose --env-file .env
 
 help:
 	@echo "Domain-Driven Trading Engine commands:"
-	@echo "  make dev                 - Start all backend (Docker Compose) and launch web frontend"
-	@echo "  make dev-services        - Start backend services only (external infra) and launch web frontend"
+	@echo "  make dev                 - Start cloud backend (:5470), web client (:5471) & admin (:5472)"
+	@echo "  make dev-services        - Start backend services only (external infra) and launch web client & admin"
 	@echo "  make dev-down            - Stop all running Docker Compose backend containers"
 	@echo "  make build               - Build all Go binaries (gateway, engine, settlement)"
 	@echo "  make test                - Run domain & application unit tests"
@@ -36,16 +36,14 @@ help:
 	@echo "  make k6-load             - Run k6 high-throughput load test (>5,000 req/sec)"
 
 dev:
-	@echo "Starting backend stack with Docker Compose..."
-	$(COMPOSE) -f deployments/docker-compose.yml up -d
-	@echo "Starting web trading terminal at http://localhost:5471..."
-	cd web && pnpm dev
+	@echo "Starting platform: Backend Gateway (:5470), Web Client (:5471), and Admin Console (:5472)..."
+	cd web && pnpm dev:all
 
 dev-services:
 	@echo "Starting backend services only..."
 	$(COMPOSE) -f deployments/docker-compose.services.yml up -d
-	@echo "Starting web trading terminal at http://localhost:5471..."
-	cd web && pnpm dev
+	@echo "Starting web client at http://localhost:5471 and admin at http://localhost:5472..."
+	cd web && pnpm dev:all
 
 dev-down:
 	$(COMPOSE) -f deployments/docker-compose.yml down
@@ -111,10 +109,10 @@ run-engine:
 	$(GO) run ./cmd/engine/main.go
 
 run-gateway:
-	$(GO) run ./cmd/gateway/main.go
+	$(GO) run ./cmd/gateway
 
 run-settlement:
-	$(GO) run ./cmd/settlement/main.go
+	$(GO) run ./cmd/settlement
 
 run-web:
 	cd web && pnpm dev:client

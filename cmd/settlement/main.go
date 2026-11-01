@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/domain-driven-trading/domain-driven-trading/internal/config"
 	"github.com/domain-driven-trading/domain-driven-trading/internal/infrastructure/kafka"
 	"github.com/domain-driven-trading/domain-driven-trading/internal/infrastructure/persistence/postgres"
 	"github.com/jackc/pgx/v5"
@@ -27,6 +28,7 @@ const consumerGroup = "settlement"
 // gateway having written them and recovers any row the gateway lost. See
 // kafka.SettlementConsumer for the delivery contract.
 func main() {
+	config.LoadDotEnv()
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
 	slog.SetDefault(logger)
 

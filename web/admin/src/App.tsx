@@ -11,6 +11,7 @@ import { useSettlementMetrics } from './hooks/useSettlementMetrics';
 import { DashboardTab } from './screens/DashboardTab';
 import { OrderBookMonitorTab } from './screens/OrderBookMonitorTab';
 import { OrdersInspectorTab } from './screens/OrdersInspectorTab';
+import { EventsTab } from './screens/EventsTab';
 import { SettlementLedgerTab } from './screens/SettlementLedgerTab';
 import { AccountsRiskTab } from './screens/AccountsRiskTab';
 import { InfrastructureTab } from './screens/InfrastructureTab';
@@ -25,7 +26,7 @@ function AdminDashboardContent() {
   const haltedBooksCount = books.filter((b) => b.status === 'HALTED').length;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className="h-screen w-full bg-slate-950 text-slate-100 flex flex-col font-sans overflow-hidden">
       <Header isLiveConnected={isLiveConnected} />
 
       <div className="flex-1 flex overflow-hidden">
@@ -36,8 +37,8 @@ function AdminDashboardContent() {
           haltedCount={haltedBooksCount}
         />
 
-        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-950/90">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-950/90 h-full">
+          <div className="max-w-7xl mx-auto pb-12">
             {currentTab === 'dashboard' && (
               <DashboardTab
                 nodes={nodes}
@@ -58,6 +59,8 @@ function AdminDashboardContent() {
             )}
 
             {currentTab === 'orders' && <OrdersInspectorTab />}
+
+            {currentTab === 'events' && <EventsTab />}
 
             {currentTab === 'settlement' && <SettlementLedgerTab vouchers={vouchers} />}
 

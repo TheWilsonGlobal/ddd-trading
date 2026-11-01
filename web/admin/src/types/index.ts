@@ -2,6 +2,7 @@ export type Tab =
   | 'dashboard'
   | 'orderbooks'
   | 'orders'
+  | 'events'
   | 'settlement'
   | 'accounts'
   | 'infra'
@@ -62,6 +63,15 @@ export interface SettlementVoucher {
   netCredit: number;
   invariantPassed: boolean;
   settledAt: string;
+}
+
+export interface KafkaEventRecord {
+  id: string;
+  topic: 'orders.placement' | 'orders.events' | 'market.depth' | 'trading.settlement';
+  partitionKey: string;
+  eventType: 'OrderPlaced' | 'OrderMatched' | 'OrderCanceled' | 'MarketDepth' | 'SettlementCreated';
+  timestamp: string;
+  payload: Record<string, any>;
 }
 
 export interface AccountRecord {

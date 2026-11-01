@@ -1,10 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#020617"/>
-  <!-- order book depth: bids (green) left, asks (red) right -->
-  <rect x="10" y="38" width="8" height="14" rx="1.5" fill="#10b981" opacity=".55"/>
-  <rect x="21" y="30" width="8" height="22" rx="1.5" fill="#10b981" opacity=".8"/>
-  <rect x="35" y="24" width="8" height="28" rx="1.5" fill="#f43f5e" opacity=".8"/>
-  <rect x="46" y="34" width="8" height="18" rx="1.5" fill="#f43f5e" opacity=".55"/>
-  <!-- price line -->
-  <polyline points="10,22 22,16 34,19 46,9 54,12" fill="none" stroke="#34d399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="adminGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background container -->
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" fill="none" stroke="#334155" stroke-width="2"/>
+
+  <!-- Admin Shield Contour -->
+  <path d="M32 11 L48 17 V28 C48 39.5 32 49 32 49 C32 49 16 39.5 16 28 V17 Z" 
+        fill="url(#adminGrad)" 
+        opacity="0.2"/>
+  <path d="M32 11 L48 17 V28 C48 39.5 32 49 32 49 C32 49 16 39.5 16 28 V17 Z" 
+        fill="none" 
+        stroke="url(#adminGrad)" 
+        stroke-width="3.5" 
+        stroke-linejoin="round"
+        stroke-linecap="round"/>
+
+  <!-- Central Core Hexagon -->
+  <polygon points="32,21 40,26 40,34 32,39 24,34 24,26" 
+           fill="url(#adminGrad)"/>
+
+  <!-- Glowing status beacon -->
+  <circle cx="32" cy="30" r="3.5" fill="#ffffff" filter="url(#glow)"/>
 </svg>

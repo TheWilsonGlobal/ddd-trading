@@ -1,12 +1,13 @@
 # ==============================================================================
-# scripts/dev.ps1: Start all backend services and frontend web terminal
+# scripts/dev.ps1: Start Domain-Driven Trading Platform (Cloud / Local)
 # ==============================================================================
 
 param(
-    [switch]$ServicesOnly,
+    [switch]$Docker,
     [switch]$Down,
     [switch]$Admin,
-    [switch]$All
+    [switch]$Client,
+    [switch]$Backend
 )
 
 $RootDir = Split-Path -Parent $PSScriptRoot
@@ -19,15 +20,14 @@ if ($Down) {
 }
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host " Starting Domain-Driven Trading Platform (Backend + Web)" -ForegroundColor Cyan
+Write-Host " Starting Domain-Driven Trading Platform" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
-if ($ServicesOnly) {
-    Write-Host "[1/2] Launching backend services (Engine, Gateway, Settlement)..." -ForegroundColor Green
-    docker compose --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.services.yml" up -d
-} else {
-    Write-Host "[1/2] Launching full backend stack (Redpanda, Redis, Postgres, Services)..." -ForegroundColor Green
+if ($Docker) {
+    Write-Host "[1/2] Launching local backend Docker containers..." -ForegroundColor Green
     docker compose --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.yml" up -d
+} else {
+    Write-Host "[1/2] Using Cloud Services (Supabase PG, Upstash Redis, Redpanda Kafka)..." -ForegroundColor Green
 }
 
 Set-Location "$RootDir\web"
@@ -35,10 +35,13 @@ Set-Location "$RootDir\web"
 if ($Admin) {
     Write-Host "[2/2] Launching Admin Control Center at http://localhost:5472..." -ForegroundColor Green
     pnpm dev:admin
-} elseif ($All) {
-    Write-Host "[2/2] Launching Web Client (:5471) and Admin Center (:5472)..." -ForegroundColor Green
-    pnpm dev:all
-} else {
+} elseif ($Client) {
     Write-Host "[2/2] Launching interactive web terminal at http://localhost:5471..." -ForegroundColor Green
     pnpm dev:client
+} elseif ($Backend) {
+    Write-Host "[2/2] Launching Go Gateway at http://localhost:5470..." -ForegroundColor Green
+    pnpm dev:backend
+} else {
+    Write-Host "[2/2] Launching Backend (:5470), Client (:5471), and Admin (:5472)..." -ForegroundColor Green
+    pnpm dev:all
 }

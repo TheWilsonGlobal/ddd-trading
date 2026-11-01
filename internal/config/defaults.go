@@ -3,6 +3,11 @@
 // value here is the default for a variable that can still override it.
 package config
 
+import (
+	"os"
+	"strings"
+)
+
 const (
 	// DefaultPort is the gateway HTTP/WS port when PORT is unset.
 	DefaultPort = "5470"
@@ -22,3 +27,31 @@ const (
 	// app_metadata.account_id) selects a nested claim.
 	DefaultAccountClaim = "account_id"
 )
+
+// LoadDotEnv searches for .env in current and parent directories and loads variables into the environment if not already set.
+func LoadDotEnv() {
+	candidates := []string{".env", "../.env", "../../.env"}
+	for _, path := range candidates {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			continue
+		}
+		lines := strings.Split(string(data), "\n")
+		for _, line := range lines {
+			line = strings.TrimSpace(line)
+			if line == "" || strings.HasPrefix(line, "#") {
+				continue
+			}
+			parts := strings.SplitN(line, "=", 2)
+			if len(parts) == 2 {
+				key := strings.TrimSpace(parts[0])
+				val := strings.TrimSpace(parts[1])
+				val = strings.Trim(val, `"'`)
+				if os.Getenv(key) == "" {
+					os.Setenv(key, val)
+				}
+			}
+		}
+		return
+	}
+}

@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   BarChart3,
   ListOrdered,
+  Radio,
   FileSpreadsheet,
   Users,
   Server,
@@ -40,8 +41,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     { key: 'orders', label: 'Orders Inspector', icon: ListOrdered },
     {
+      key: 'events',
+      label: 'Kafka Event Stream',
+      icon: Radio,
+      badge: 'Live',
+      badgeVariant: 'cyan',
+    },
+    {
       key: 'settlement',
-      label: 'Double-Entry Ledger',
+      label: 'Ledger',
       icon: FileSpreadsheet,
       badge: unsettledCount > 0 ? unsettledCount : 'Verified',
       badgeVariant: unsettledCount > 0 ? 'rose' : 'cyan',
@@ -52,7 +60,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-64 border-r border-slate-800 bg-slate-900/60 backdrop-blur p-4 flex flex-col justify-between shrink-0">
+    <aside className="w-64 border-r border-slate-800 bg-slate-900/60 backdrop-blur p-4 flex flex-col justify-between shrink-0 h-full overflow-y-auto">
       <div className="space-y-1">
         <div className="px-3 pb-3 pt-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 font-mono">
           Operations & Control
