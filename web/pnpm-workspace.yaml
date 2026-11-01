@@ -1,2 +1,6 @@
+packages:
+  - 'client'
+  - 'admin'
+
 allowBuilds:
   esbuild: true

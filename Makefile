@@ -1,4 +1,4 @@
-.PHONY: help vet test-race-docker govulncheck dev dev-services dev-down build test test-race benchmark docker-up docker-up-services docker-down docker-down-services run-gateway run-engine run-settlement run-web k6-load seed-db migrate-supabase
+.PHONY: help vet test-race-docker govulncheck dev dev-services dev-down build test test-race benchmark docker-up docker-up-services docker-down docker-down-services run-gateway run-engine run-settlement run-web run-admin run-web-all k6-load seed-db migrate-supabase
 
 # Go is required on the host (version pinned by the go directive in go.mod).
 # The old bind-mount docker fallback was dropped: bind mounts do not work on
@@ -31,6 +31,8 @@ help:
 	@echo "  make run-gateway         - Start REST/WebSocket API gateway locally"
 	@echo "  make run-settlement      - Start PostgreSQL async settlement worker locally"
 	@echo "  make run-web             - Start web frontend dev server (Vite on port 5471)"
+	@echo "  make run-admin           - Start admin control center dev server (Vite on port 5472)"
+	@echo "  make run-web-all         - Start both web client and admin concurrently"
 	@echo "  make k6-load             - Run k6 high-throughput load test (>5,000 req/sec)"
 
 dev:
@@ -115,7 +117,13 @@ run-settlement:
 	$(GO) run ./cmd/settlement/main.go
 
 run-web:
-	cd web && pnpm dev
+	cd web && pnpm dev:client
+
+run-admin:
+	cd web && pnpm dev:admin
+
+run-web-all:
+	cd web && pnpm dev:all
 
 k6-load:
 	k6 run scripts/k6_benchmark.js

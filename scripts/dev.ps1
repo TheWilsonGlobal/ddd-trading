@@ -4,7 +4,9 @@
 
 param(
     [switch]$ServicesOnly,
-    [switch]$Down
+    [switch]$Down,
+    [switch]$Admin,
+    [switch]$All
 )
 
 $RootDir = Split-Path -Parent $PSScriptRoot
@@ -28,6 +30,15 @@ if ($ServicesOnly) {
     docker compose --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.yml" up -d
 }
 
-Write-Host "[2/2] Launching interactive web terminal at http://localhost:5471..." -ForegroundColor Green
 Set-Location "$RootDir\web"
-pnpm dev
+
+if ($Admin) {
+    Write-Host "[2/2] Launching Admin Control Center at http://localhost:5472..." -ForegroundColor Green
+    pnpm dev:admin
+} elseif ($All) {
+    Write-Host "[2/2] Launching Web Client (:5471) and Admin Center (:5472)..." -ForegroundColor Green
+    pnpm dev:all
+} else {
+    Write-Host "[2/2] Launching interactive web terminal at http://localhost:5471..." -ForegroundColor Green
+    pnpm dev:client
+}
