@@ -3,6 +3,7 @@
 #   ddt-gateway     web (Docker)     REST + /ws/market, reads/writes Postgres, Redis, Kafka
 #   ddt-settlement  worker (Docker)  consumes orders.events, persists trades to Postgres
 #   ddt-web         static (Vite)    trading terminal (client-side simulation today)
+#   ddd-admin       static (Vite)    admin console
 #   ddt-postgres    Postgres 16
 #   ddt-redis       Key Value        idempotency keys
 #
@@ -93,6 +94,15 @@ services:
     runtime: static
     buildCommand: cd web && npx -y pnpm@10 install --frozen-lockfile && npx -y pnpm@10 build:client
     staticPublishPath: ./web/client/dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+
+  - type: web
+    name: ddd-admin
+    runtime: static
+    buildCommand: cd web && npx -y pnpm@10 install --frozen-lockfile && npx -y pnpm@10 build:admin
+    staticPublishPath: ./web/admin/dist
     envVars:
       - key: NODE_VERSION
         value: "22"
