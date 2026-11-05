@@ -230,4 +230,4 @@ Zero overdraft invariant is enforced prior to entering the matching queue.
 | Web terminal | Not done: still a client-side simulation; it does not call the gateway or send a token |
 | Not done | Proto contracts (D8), SCRAM auth for Kafka, per-account rate limits, durable outbox |
 
-Full diagrams and a gap-closing plan: `C:/Git/.notes/JOBs/fin/domain-driven-trading/architecture/architecture.md`.
+Full diagrams and a gap-closing plan: `docs/architecture.md`.
