@@ -11,11 +11,12 @@ param(
 )
 
 $RootDir = Split-Path -Parent $PSScriptRoot
+$env:COMPOSE_CONVERT_WINDOWS_PATHS = "1"
 
 if ($Down) {
     Write-Host "Stopping all Docker Compose backend containers..." -ForegroundColor Yellow
-    docker compose --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.yml" down
-    docker compose --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.services.yml" down
+    docker compose -p ddd-trading --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.yml" down
+    docker compose -p ddd-trading --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.services.yml" down
     exit 0
 }
 
@@ -25,7 +26,7 @@ Write-Host "==========================================================" -Foregro
 
 if ($Docker) {
     Write-Host "[1/2] Launching local backend Docker containers..." -ForegroundColor Green
-    docker compose --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.yml" up -d
+    docker compose -p ddd-trading --env-file "$RootDir\.env" -f "$RootDir\deployments\docker-compose.yml" up -d
 } else {
     Write-Host "[1/2] Using Cloud Services (Supabase PG, Upstash Redis, Redpanda Kafka)..." -ForegroundColor Green
 }

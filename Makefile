@@ -8,7 +8,7 @@ GO = go
 # Keep in step with deployments/Dockerfile and go.mod.
 GO_IMAGE = golang:1.27.3-alpine@sha256:d200d2dd76b03a99b52651fd1325aff7dcd35422c35c01bac56571b0507f3deb
 # Compose reads only the root .env (deployments/.env is not used).
-COMPOSE = docker compose --env-file .env
+COMPOSE = docker compose -p ddd-trading --env-file .env
 
 help:
 	@echo "Domain-Driven Trading Engine commands:"

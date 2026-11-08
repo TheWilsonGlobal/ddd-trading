@@ -1,3 +1,5 @@
+name: ddd-trading
+
 # Domain-Driven Trading Services only (Engine, Gateway, Settlement Worker)
 # Connects to external infrastructure:
 # - Redpanda (Kafka)
